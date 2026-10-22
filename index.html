@@ -35,7 +35,7 @@ nav .wrap{display:flex;align-items:center;height:68px;gap:36px}
 
 /* ---------- hero ---------- */
 .hero{position:relative;padding:150px 0 0;text-align:center;overflow:hidden;isolation:isolate}
-.beam{position:absolute;left:50%;top:-10%;width:560px;height:95%;transform:translateX(-50%);z-index:-1;pointer-events:none;transform-origin:top center;
+.beam{position:absolute;left:calc(50% - 280px);top:-10%;width:560px;height:95%;z-index:-1;pointer-events:none;transform-origin:top center;will-change:transform,opacity;
   background:radial-gradient(closest-side,rgba(124,92,255,.55),rgba(124,92,255,.12) 60%,transparent);filter:blur(30px)}
 .beam::after{content:"";position:absolute;left:50%;top:0;width:160px;height:100%;transform:translateX(-50%);
   background:linear-gradient(to bottom,rgba(196,184,255,.55),rgba(124,92,255,.25) 50%,transparent);filter:blur(24px)}
@@ -74,47 +74,29 @@ h1 .w{display:inline-block}
 .menu small{font:400 11px/1 var(--fm);color:var(--faint)}
 .menu .mine .lg{background:var(--violet-soft);color:var(--violet-2)}
 
-/* horizon + the app rising out of it */
-.horizon-wrap{position:relative;margin-top:40px;height:700px}
-.horizon{position:absolute;left:50%;top:70px;width:2400px;height:2400px;transform:translateX(-50%);border-radius:50%;background:var(--bg);z-index:0;
-  box-shadow:0 -1px 0 rgba(214,206,255,.9),0 -18px 60px rgba(124,92,255,.85),0 -60px 160px rgba(124,92,255,.5)}
-.horizon-glow{position:absolute;left:50%;top:-50px;width:1200px;height:260px;transform:translateX(-50%);z-index:0;pointer-events:none;
-  background:radial-gradient(closest-side,rgba(180,165,255,.75),rgba(124,92,255,.25) 55%,transparent);filter:blur(20px)}
-.stage{position:relative;z-index:2;perspective:1600px;max-width:1040px;margin:0 auto;padding:150px 24px 0}
-.dash{transform-origin:50% 0;border-radius:22px;background:linear-gradient(180deg,#121219,#0A0A0F);border:1px solid var(--line-2);
-  box-shadow:0 -1px 0 rgba(255,255,255,.12) inset,0 50px 120px rgba(0,0,0,.7),0 0 0 6px rgba(255,255,255,.025);
-  display:grid;grid-template-columns:64px 1fr;text-align:left;overflow:hidden}
-.d-side{border-right:1px solid var(--line);padding:18px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
-.d-side span{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center}
-.d-side span.on{background:var(--violet-soft);border-color:rgba(124,92,255,.5)}
-.d-side svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.d-side span.on svg{stroke:var(--violet-2)}
-.d-main{padding:22px 24px 26px}
-.d-top{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.d-top h3{margin:0;font-size:22px;font-weight:400;letter-spacing:-.02em;flex:1}
-.timer{display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--fm);border:1px solid var(--line-2);border-radius:999px;padding:8px 14px 8px 10px;background:rgba(61,214,140,.06)}
-.timer i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good)}
-.timer b{font-weight:500;color:var(--muted)}
-.d-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
-.card{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:18px}
-.card-h{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);margin-bottom:12px}
-.card-h .ic{width:26px;height:26px;border-radius:8px;background:var(--violet-soft);display:grid;place-items:center}
-.card-h .ic svg{width:14px;height:14px;stroke:var(--violet-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.card-h .sp{flex:1}
-.big{font-size:34px;letter-spacing:-.03em;font-weight:400;line-height:1}
-.big small{font-size:15px;color:var(--faint);margin-left:6px}
-.delta{display:inline-block;font:500 11px/1 var(--fm);color:var(--good);background:var(--good-soft);border-radius:6px;padding:5px 7px;margin:10px 0 2px}
-.bars{display:flex;align-items:flex-end;gap:10px;height:118px;margin-top:14px}
-.bars div{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));transform-origin:bottom;position:relative}
-.bars div.hi{background:linear-gradient(180deg,var(--violet),rgba(124,92,255,.35));box-shadow:0 0 30px rgba(124,92,255,.35)}
-.days{display:flex;gap:10px;margin-top:8px;font:400 11px/1 var(--fm);color:var(--faint)}.days span{flex:1;text-align:center}
-.task{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
-.task:first-of-type{border-top:0}
-.task .av{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font:600 11px/1 var(--f);flex:none}
-.task .t{flex:1;min-width:0}.task .t b{display:block;font-weight:500}.task .t small{color:var(--faint);font-size:12px}
-.st{font:500 11px/1 var(--f);border-radius:999px;padding:5px 9px;background:rgba(255,255,255,.06);color:var(--muted);white-space:nowrap}
-.st.prog{background:var(--violet-soft);color:var(--violet-2)}
-.st.done{background:var(--good-soft);color:var(--good)}
+/* horizon + the app rising out of it. Scroll moves the .hz and .par layers; the intro moves what's inside,
+   so the two never fight over the same transform. */
+.horizon-wrap{position:relative;margin-top:40px;height:760px}
+.hz{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.horizon{position:absolute;left:calc(50% - 1200px);top:70px;width:2400px;height:2400px;border-radius:50%;background:var(--bg);
+  box-shadow:0 -1px 0 rgba(214,206,255,.9),0 -18px 60px rgba(124,92,255,.85),0 -60px 160px rgba(124,92,255,.5);will-change:transform}
+.horizon-glow{position:absolute;left:calc(50% - 600px);top:-50px;width:1200px;height:260px;
+  background:radial-gradient(closest-side,rgba(180,165,255,.75),rgba(124,92,255,.25) 55%,transparent);filter:blur(20px);will-change:transform,opacity}
+.stage{position:relative;z-index:2;perspective:1600px;max-width:1080px;margin:0 auto;padding:150px 24px 0}
+.par{position:relative;will-change:transform}
+.dash{transform-origin:50% 0;border-radius:18px;background:#0E0E14;border:1px solid var(--line-2);overflow:hidden;text-align:left;
+  box-shadow:0 -1px 0 rgba(255,255,255,.12) inset,0 50px 120px rgba(0,0,0,.7),0 0 0 6px rgba(255,255,255,.025)}
+.chrome{display:flex;align-items:center;height:42px;padding:0 14px;border-bottom:1px solid var(--line);background:#121219}
+.dots{display:flex;gap:7px;width:60px}.dots i{width:10px;height:10px;border-radius:50%;background:#2B2B34}
+.stabs{display:flex;gap:2px;margin:0 auto}
+.stabs button{position:relative;font:500 12.5px/1 var(--f);color:var(--muted);background:none;border:0;padding:8px 13px;border-radius:8px;cursor:pointer;overflow:hidden;transition:color .3s,background .3s}
+.stabs button:hover{color:var(--text)}
+.stabs button.on{color:var(--text);background:rgba(255,255,255,.07)}
+.stabs button i{position:absolute;left:10px;right:10px;bottom:3px;height:2px;border-radius:2px;background:var(--violet-2);transform:scaleX(0);transform-origin:left}
+.chrome .sp-r{width:60px}
+.screen{position:relative;aspect-ratio:16/10;background:#FAFAF8;overflow:hidden}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;opacity:0;will-change:opacity,transform}
+.screen img.on{opacity:1}
 
 .quick{position:absolute;z-index:3;right:-28px;bottom:90px;width:420px;background:rgba(19,19,26,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border:1px solid var(--line-2);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(124,92,255,.12);text-align:left;overflow:hidden}
@@ -192,21 +174,19 @@ footer a:hover{color:var(--text)}
 @media (max-width:980px){
   .links{display:none}
   nav .wrap{justify-content:space-between}
-  .d-grid{grid-template-columns:1fr}
   .quick{right:12px;width:min(420px,calc(100% - 24px))}
   .feats,.keys{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
   .horizon-wrap{height:auto;padding-bottom:150px}
+  .chrome .dots,.chrome .sp-r{display:none}
 }
 @media (max-width:600px){
   .wrap{padding:0 16px}
   .hero{padding-top:120px}
   .lede{font-size:16px}
   .stage{padding:0 12px}
-  .dash{grid-template-columns:1fr}.d-side{display:none}
-  .d-main{padding:16px}
-  .d-top h3{font-size:18px}
-  .card.tasks .task:nth-of-type(n+3){display:none}
+  .stabs button{padding:7px 9px;font-size:12px}
+  .quick{position:relative;right:auto;bottom:auto;width:auto;margin-top:14px}
   .steps{grid-template-columns:1fr}
   .paper{border-radius:26px;padding:80px 0 90px}
   .stage{padding-top:110px}
@@ -246,41 +226,29 @@ footer a:hover{color:var(--text)}
   </div>
 
   <div class="horizon-wrap">
-    <div class="horizon-glow" id="hglow"></div>
-    <div class="horizon" id="horizon"></div>
-    <div class="stage" aria-hidden="true">
+    <div class="hz" id="hz"><div class="horizon-glow" id="hglow"></div><div class="horizon" id="horizon"></div></div>
+    <div class="stage">
+     <div class="par" id="par">
       <div class="dash" id="dash">
-        <div class="d-side">
-          <span class="on"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></span>
-          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2M10 3h4"/></svg></span>
-          <span><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span>
-          <span><svg viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/></svg></span>
-          <span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>
-        </div>
-        <div class="d-main">
-          <div class="d-top"><h3>Good morning, Ritesh</h3><span class="timer"><i></i><span id="clock">1:24:08</span><b>Icons</b></span></div>
-          <div class="d-grid">
-            <div class="card">
-              <div class="card-h"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2"/></svg></span>This week<span class="sp"></span></div>
-              <div class="big"><span class="count" data-to="31.5" data-dec="1">31.5</span><small>/ 40 h</small></div>
-              <span class="delta">+4.5 h on last week</span>
-              <div class="bars" id="bars"><div style="height:62%"></div><div style="height:78%"></div><div class="hi" style="height:96%"></div><div style="height:70%"></div><div style="height:38%"></div></div>
-              <div class="days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
-            </div>
-            <div class="card tasks">
-              <div class="card-h"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span>Due this week<span class="sp"></span><span class="st" id="cnt">4 open</span></div>
-              <div class="task"><span class="av" style="background:#2A2346;color:#C9BEFF">PO</span><span class="t"><b>Icons</b><small>Lottie icon set · Pixel Orbit</small></span><span class="st prog" id="s1">In progress</span></div>
-              <div class="task"><span class="av" style="background:#14301F;color:#7FE3AE">BD</span><span class="t"><b>Resize</b><small>Diwali carousel · Bloom Dental</small></span><span class="st" id="s2">To do</span></div>
-              <div class="task"><span class="av" style="background:#33261A;color:#F2C38B">NW</span><span class="t"><b>Design variants</b><small>Yoga retreat ads · Northwind</small></span><span class="st">To do</span></div>
-              <div class="task"><span class="av" style="background:#2A2346;color:#C9BEFF">PO</span><span class="t"><b>Sound</b><small>Explainer · Pixel Orbit</small></span><span class="st">To do</span></div>
-            </div>
-          </div>
+        <div class="chrome"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div class="stabs" role="tablist" aria-label="Screens from the app">
+            <button type="button" role="tab" class="on"><span>Today</span><i></i></button>
+            <button type="button" role="tab"><span>Work</span><i></i></button>
+            <button type="button" role="tab"><span>Plan</span><i></i></button>
+            <button type="button" role="tab"><span>Timer</span><i></i></button>
+          </div><span class="sp-r"></span></div>
+        <div class="screen">
+          <img class="on" src="shots/today.webp" width="1800" height="1125" alt="Studio Desk, Today: the timer, what's due and what needs review" decoding="async" fetchpriority="high">
+          <img src="shots/work.webp" width="1800" height="1125" alt="Studio Desk, Work: clients, projects and deliverables with hours against estimates" decoding="async">
+          <img src="shots/timeline.webp" width="1800" height="1125" alt="Studio Desk, Plan: everyone's tasks on a timeline" decoding="async">
+          <img src="shots/track.webp" width="1800" height="1125" alt="Studio Desk, Timer: a running timer and this week's time" decoding="async">
         </div>
       </div>
       <div class="quick" id="quick">
         <div class="bar"><div class="sd">SD</div><div class="typed"><span id="typed"></span><span class="caret"></span></div><span class="kb">Ctrl ⇧ Space</span></div>
         <div class="res" id="res">&nbsp;</div>
       </div>
+     </div>
     </div>
   </div>
 </header>
@@ -425,27 +393,40 @@ footer a:hover{color:var(--text)}
   /* ---------- live bits: clocks and the quick bar ---------- */
   var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pad=function(n){return(n<10?'0':'')+n},fmt=function(s){return Math.floor(s/3600)+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60)};
-  var t1=5048,t2=2537;
-  if(!still)setInterval(function(){t1++;t2++;$('clock').textContent=fmt(t1);$('bigclock').textContent=pad(Math.floor(t2/3600))+':'+pad(Math.floor(t2%3600/60))+':'+pad(t2%60)},1000);
+  var t2=2537;
+  if(!still)setInterval(function(){t2++;$('bigclock').textContent=pad(Math.floor(t2/3600))+':'+pad(Math.floor(t2%3600/60))+':'+pad(t2%60)},1000);
+
+  /* the app's real screens: Today → Work → Plan → Timer, each for a few seconds; the tabs jump */
+  var shots=[].slice.call(document.querySelectorAll('.screen img')),stabs=[].slice.call(document.querySelectorAll('.stabs button')),shot=0,shotT=null;
+  function showShot(n){
+    var anim=window.gsap&&!still,prev=shots[shot];shot=n;
+    stabs.forEach(function(b,k){b.classList.toggle('on',k===n);b.setAttribute('aria-selected',k===n)});
+    if(!anim){shots.forEach(function(im,k){im.classList.toggle('on',k===n)});return}
+    if(shotT)shotT.kill();
+    stabs.forEach(function(b){gsap.set(b.querySelector('i'),{scaleX:0})});
+    if(prev!==shots[n]){gsap.killTweensOf(prev);gsap.to(prev,{opacity:0,duration:.9,ease:'power2.inOut'})}
+    var im=shots[n];gsap.killTweensOf(im);im.classList.add('on');
+    gsap.fromTo(im,{opacity:prev===im?1:0,scale:1.045},{opacity:1,duration:.9,ease:'power2.out'});
+    gsap.to(im,{scale:1,duration:5.5,ease:'power1.out',transformOrigin:'22% 12%'});
+    shotT=gsap.to(stabs[n].querySelector('i'),{scaleX:1,duration:5,ease:'none',onComplete:function(){showShot((n+1)%shots.length)}})}
+  stabs.forEach(function(b,k){b.addEventListener('click',function(){showShot(k)})});
+
   var LINES=[
-    {t:'icons done',r:'✓ Icons → Done',s:['s1','done','Done'],c:'3 open'},
-    {t:'start resize on diwali carousel',r:'Timer started · Resize',s:['s2','prog','In progress']},
+    {t:'icons done',r:'✓ Icons → Done'},
+    {t:'start resize on diwali carousel',r:'Timer started · Resize'},
     {t:'design variants due friday',r:'✓ Design variants due Friday'},
     {t:'log 1h 30m on sound',r:'Logged 1:30 · Sound'}];
   var typed=$('typed'),res=$('res'),i=0;
-  function reset(){$('s1').className='st prog';$('s1').textContent='In progress';$('s2').className='st';$('s2').textContent='To do';$('cnt').textContent='4 open'}
   function play(){
-    var L=LINES[i%LINES.length],n=0;if(i%LINES.length===0)reset();
+    var L=LINES[i%LINES.length],n=0;
     res.classList.remove('on');typed.textContent='';
     var k=setInterval(function(){typed.textContent=L.t.slice(0,++n);if(n>=L.t.length){clearInterval(k);
       setTimeout(function(){res.textContent=L.r;res.classList.add('on');
-        if(L.s){var s=$(L.s[0]);s.className='st '+L.s[1];s.textContent=L.s[2];if(window.gsap)gsap.fromTo(s,{scale:.7},{scale:1,duration:.5,ease:'back.out(3)'})}
-        if(L.c)$('cnt').textContent=L.c;
         i++;setTimeout(play,2600)},420)}},55)}
   if(still){typed.textContent=LINES[0].t;res.textContent=LINES[0].r;res.classList.add('on')}
 
   /* ---------- motion (GSAP). Without it, or with reduced motion, everything simply shows. ---------- */
-  if(!window.gsap||still){if(!still)play();return}
+  if(!window.gsap||still){if(!still)play();showShot(0);return}
   gsap.registerPlugin(ScrollTrigger);
 
   /* headline: words rise out of a blur */
@@ -460,19 +441,14 @@ footer a:hover{color:var(--text)}
        .from('#cta > *',{y:16,opacity:0,stagger:.1,duration:.7},1)
        .from('#horizon',{y:140,duration:1.6,ease:'expo.out'},.5)
        .from('#hglow',{opacity:0,scaleX:.4,duration:1.8,ease:'power2.out'},.7)
-       .from('#dash',{y:160,opacity:0,rotateX:28,duration:1.6,ease:'expo.out'},.9)
-       .from('#bars div',{scaleY:0,stagger:.08,duration:.9,ease:'back.out(1.6)'},1.6)
-       .from('#dash .task',{x:20,opacity:0,stagger:.08,duration:.6},1.6)
+       .from('#dash',{y:160,opacity:0,rotateX:28,duration:1.6,ease:'expo.out',onStart:function(){showShot(0)}},.9)
        .from('#quick',{y:40,opacity:0,scale:.94,duration:.9,ease:'back.out(1.4)',onComplete:play},2.1);
-  /* count up */
-  gsap.utils.toArray('.count').forEach(function(el){var o={v:0},to=+el.dataset.to,d=+el.dataset.dec||0;
-    intro.to(o,{v:to,duration:1.6,ease:'power2.out',onUpdate:function(){el.textContent=o.v.toFixed(d)}},1.4)});
 
-  /* scroll: the app tilts flat and the beam fades as the white panel slides over */
-  gsap.to('#dash',{scale:1.05,y:-30,ease:'none',scrollTrigger:{trigger:'.horizon-wrap',start:'top 70%',end:'bottom top',scrub:true}});
-  gsap.to('#horizon,#hglow',{y:-60,ease:'none',scrollTrigger:{trigger:'.horizon-wrap',start:'top 70%',end:'bottom top',scrub:true}});
-  gsap.to('#beam',{opacity:.25,yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-  gsap.to('#quick',{y:-40,ease:'none',scrollTrigger:{trigger:'.horizon-wrap',start:'top bottom',end:'bottom top',scrub:true}});
+  /* scroll: separate layers drift at different speeds (scrub smooths the wheel's steps) */
+  var hzT={trigger:'.horizon-wrap',start:'top 70%',end:'bottom top',scrub:.6};
+  gsap.to('#par',{scale:1.04,y:-40,ease:'none',scrollTrigger:hzT});
+  gsap.to('#hz',{y:-70,ease:'none',scrollTrigger:hzT});
+  gsap.to('#beam',{opacity:.25,yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.6}});
 
   /* section headings */
   gsap.utils.toArray('.reveal').forEach(function(h){gsap.from(h,{y:40,opacity:0,filter:'blur(10px)',duration:1,ease:'power3.out',scrollTrigger:{trigger:h,start:'top 85%'}})});
