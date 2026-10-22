@@ -1,15 +1,29 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Privacy policy · Studio Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FAFAF8;--text:#171715;--muted:#5C5C56;--faint:#7A7A73;--link:#3451C4;color-scheme:light}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:720px;margin:0 auto;padding:56px 16px 72px}h1{font-size:30px;margin:0 0 4px}h2{font-size:19px;margin:32px 0 6px}
-p,li{color:var(--muted)}a{color:var(--link)}footer{margin-top:48px;font-size:14px;color:var(--faint)}
+:root{--ink:#171715;--ink-text:#F4F4F1;--ink-muted:#A3A39B;--canvas:#FAFAF8;--line:#E0E0DB;--text:#171715;--muted:#5C5C56;--faint:#7A7A73;
+  --f:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--fm:"Geist Mono",ui-monospace,Menlo,Consolas,monospace;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--text);font:16px/1.65 var(--f);-webkit-font-smoothing:antialiased}
+header{background:var(--ink);color:var(--ink-text)}
+header .in{max-width:760px;margin:0 auto;padding:22px 24px;display:flex;align-items:center;gap:12px}
+header a{color:inherit;text-decoration:none;display:flex;align-items:center;gap:12px;font-weight:600}
+.mark{width:32px;height:32px;border-radius:8px;background:var(--ink-text);color:var(--ink);display:grid;place-items:center;font-weight:700;font-size:12px}
+header .sp{flex:1}header .back{color:var(--ink-muted);font-weight:400;font-size:14px}header .back:hover{color:var(--ink-text)}
+main{max-width:760px;margin:0 auto;padding:64px 24px 80px}
+h1{font-size:clamp(34px,5vw,48px);line-height:1.05;letter-spacing:-.03em;font-weight:600;margin:0 0 10px}
+h2{font-size:19px;letter-spacing:-.01em;font-weight:600;margin:40px 0 6px;padding-top:24px;border-top:1px solid var(--line)}
+p,li{color:var(--muted)}a{color:var(--text)}
+footer{margin-top:56px;font-size:14px;color:var(--faint)}
+@media (max-width:560px){header .in,main{padding-left:16px;padding-right:16px}main{padding-top:40px}}
 </style></head>
-<body><main>
+<body>
+<header><div class="in"><a href="index.html"><span class="mark">SD</span>Studio Desk</a><span class="sp"></span><a class="back" href="index.html">← Home</a></div></header>
+<main>
 <h1>Privacy policy</h1>
-<p style="color:var(--faint)">Studio Desk · Amble Artisans, Bengaluru · Last updated 22 October 2026</p>
+<p style="color:var(--faint);font:400 13px/1.5 var(--fm)">Studio Desk · Amble Artisans, Bengaluru · Last updated 22 October 2026</p>
 
 <h2>Who this covers</h2>
 <p>Studio Desk is an internal desktop app run by Amble Artisans for its partners, team members, freelancers and invited clients. It is not offered to the public, and nobody can sign up; a partner adds each person.</p>
