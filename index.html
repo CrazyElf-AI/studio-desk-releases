@@ -46,15 +46,33 @@ nav .wrap{display:flex;align-items:center;height:68px;gap:36px}
 h1{font-size:clamp(42px,7vw,84px);line-height:.98;letter-spacing:-.045em;font-weight:500;margin:26px auto 22px;max-width:900px;text-wrap:balance}
 h1 .w{display:inline-block}
 .lede{color:var(--muted);font-size:18px;max-width:460px;margin:0 auto 34px}
-.cta{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap}
-.cta .pill-btn{padding:13px 24px;font-size:15px}
-.ghost{font-size:14px;color:var(--muted);border-bottom:1px solid var(--line-2);padding-bottom:2px;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer}
-.ghost:hover{color:var(--text)}
-.meta{font:400 12px/1 var(--fm);color:var(--faint);margin-top:18px;letter-spacing:.02em}
-.others{display:none;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}
-.others.on{display:flex}
-.others a{font:500 12px/1 var(--fm);color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:9px 13px}
-.others a:hover{color:var(--text);border-color:var(--violet-2)}
+.cta{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.dlb{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 20px;font-weight:600;font-size:15px;line-height:1.2;color:var(--text);
+  border:1px solid var(--line-2);background:rgba(255,255,255,.04);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:translate .2s,background .2s,border-color .2s,box-shadow .2s}
+.dlb:hover{translate:0 -1px;border-color:rgba(164,147,255,.6);background:rgba(124,92,255,.14)}
+.dlb svg{width:18px;height:18px;flex:none}
+.dlb small{font:400 11px/1 var(--fm);opacity:.55;margin-left:2px}
+.dlb small:empty{display:none}
+.dlb.pri{background:var(--text);color:var(--bg);border-color:var(--text)}
+.dlb.pri:hover{background:#fff;box-shadow:0 8px 30px rgba(164,147,255,.4)}
+.meta{font:400 12px/1 var(--fm);color:var(--faint);margin-top:18px;letter-spacing:.02em;min-height:12px}
+/* nav download menu */
+.navdl{position:relative}
+.navdl button{border:0;cursor:pointer}
+.navdl .chev{width:14px;height:14px;transition:rotate .3s}
+.navdl button[aria-expanded=true] .chev{rotate:180deg}
+.menu{position:absolute;right:0;top:calc(100% + 10px);width:300px;padding:6px;border-radius:18px;background:rgba(19,19,26,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--line-2);box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(124,92,255,.1);transform-origin:top right;text-align:left}
+.menu[hidden]{display:none}
+.menu a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px}
+.menu a:hover,.menu a:focus-visible{background:rgba(255,255,255,.06);outline:0}
+.menu .lg{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.06);display:grid;place-items:center;flex:none}
+.menu .lg svg{width:18px;height:18px}
+.menu .tx{flex:1;line-height:1.3;min-width:0}
+.menu .tx b{display:block;font-weight:500;font-size:14px}
+.menu .tx span{font-size:12px;color:var(--faint)}
+.menu small{font:400 11px/1 var(--fm);color:var(--faint)}
+.menu .mine .lg{background:var(--violet-soft);color:var(--violet-2)}
 
 /* horizon + the app rising out of it */
 .horizon-wrap{position:relative;margin-top:40px;height:700px}
@@ -192,7 +210,8 @@ footer a:hover{color:var(--text)}
   .steps{grid-template-columns:1fr}
   .paper{border-radius:26px;padding:80px 0 90px}
   .stage{padding-top:110px}
-  .nav-dl span{display:none}
+  .navdl .lbl{display:none}
+  .cta{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}.dlb{justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){.caret{animation:none}html{scroll-behavior:auto}}
 </style></head>
@@ -201,7 +220,14 @@ footer a:hover{color:var(--text)}
 <nav id="nav"><div class="wrap">
   <a class="brand" href="#top"><span class="mark">SD</span>Studio Desk</a>
   <div class="links"><a href="#how">How it works</a><a href="#install">Install</a><a href="#keys">Shortcuts</a><a href="privacy.html">Privacy</a></div>
-  <a class="pill-btn nav-dl dl-link" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg><span>Download</span></a>
+  <div class="navdl">
+    <button class="pill-btn" id="navDl" type="button" aria-expanded="false" aria-controls="navMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg><span class="lbl">Download</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="menu" id="navMenu" hidden>
+      <a data-k="win" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><span class="lg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.1L21 21v-8.5h-9.5v7.1zm0-15.2v7.1H21V3l-9.5 1.4z"/></svg></span><span class="tx"><b>Windows</b><span>Windows 10 and 11</span></span><small></small></a>
+      <a data-k="arm" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><span class="lg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg></span><span class="tx"><b>Mac · Apple chip</b><span>M1 and later</span></span><small></small></a>
+      <a data-k="intel" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><span class="lg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg></span><span class="tx"><b>Mac · Intel</b><span>Older Macs</span></span><small></small></a>
+    </div>
+  </div>
 </div></nav>
 
 <header class="hero" id="top">
@@ -212,12 +238,10 @@ footer a:hover{color:var(--text)}
     <h1 id="h1">Run the studio from your tray.</h1>
     <p class="lede" id="lede">Projects, time and approvals for the Amble Artisans team. Always one keystroke away.</p>
     <div class="cta" id="cta">
-      <a class="pill-btn dl-link" id="dlMain" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest">
-        <svg id="dlIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
-        <span id="dlLabel">Download Studio Desk</span></a>
-      <button class="ghost" id="dlMore" type="button" aria-expanded="false" aria-controls="others">Other computers</button>
+      <a class="dlb pri" data-k="win" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.1L21 21v-8.5h-9.5v7.1zm0-15.2v7.1H21V3l-9.5 1.4z"/></svg><span>Windows</span><small></small></a>
+      <a class="dlb" data-k="arm" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg><span>Mac · Apple chip</span><small></small></a>
+      <a class="dlb" data-k="intel" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg><span>Mac · Intel</span><small></small></a>
     </div>
-    <div class="others" id="others"><a href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest">All files</a></div>
     <div class="meta" id="meta">&nbsp;</div>
   </div>
 
@@ -340,8 +364,6 @@ footer a:hover{color:var(--text)}
   /* ---------- the right download for this computer ---------- */
   var ua=navigator.userAgent||'',plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||'';
   var os=/iPhone|iPad|Android/i.test(ua)?'phone':/Win/i.test(plat)||/Windows/.test(ua)?'win':/Mac/i.test(plat)||/Mac OS X/.test(ua)?'mac':'other';
-  var APPLE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg>';
-  var WIN='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.1L21 21v-8.5h-9.5v7.1zm0-15.2v7.1H21V3l-9.5 1.4z"/></svg>';
   var arch=null;
   /* Windows / Mac: the pill slides, old steps lift away, new ones rise in, the height eases */
   var cur='win',swap=null;
@@ -363,26 +385,41 @@ footer a:hover{color:var(--text)}
   $('tWin').onclick=function(){show('win')};$('tMac').onclick=function(){show('mac')};
   if(os==='mac')show('mac',true);
   place();if(document.fonts)document.fonts.ready.then(place);addEventListener('resize',place);
-  $('dlMore').onclick=function(){var o=$('others'),on=!o.classList.contains('on');o.classList.toggle('on',on);this.setAttribute('aria-expanded',on)};
+
+  /* the computer this is: its button goes first and lights up; the menu marks it too */
+  function mark(){
+    var k=os==='mac'?(arch==='x86'?'intel':'arm'):'win',c=$('cta'),first=c.querySelector('[data-k="'+k+'"]');
+    c.querySelectorAll('.dlb').forEach(function(b){b.classList.toggle('pri',b===first)});
+    var order=k==='win'?['win','arm','intel']:k==='arm'?['arm','intel','win']:['intel','arm','win'];
+    order.forEach(function(x){c.appendChild(c.querySelector('[data-k="'+x+'"]'))});
+    $('navMenu').querySelectorAll('a').forEach(function(a){a.classList.toggle('mine',a.dataset.k===k&&(os==='win'||os==='mac'))})}
+  mark();
+
+  /* nav Download: a small menu with all three */
+  var nb=$('navDl'),menu=$('navMenu'),open=false;
+  function setMenu(on){
+    if(on===open)return;open=on;nb.setAttribute('aria-expanded',on);
+    var anim=window.gsap&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(on){menu.hidden=false;
+      if(anim){gsap.killTweensOf(menu);gsap.fromTo(menu,{opacity:0,y:-10,scale:.95},{opacity:1,y:0,scale:1,duration:.4,ease:'power3.out'});
+        gsap.fromTo(menu.children,{opacity:0,x:10},{opacity:1,x:0,stagger:.05,duration:.35,delay:.05,ease:'power2.out'})}}
+    else if(anim){gsap.killTweensOf(menu);gsap.to(menu,{opacity:0,y:-6,scale:.97,duration:.18,ease:'power2.in',onComplete:function(){if(!open)menu.hidden=true}})}
+    else menu.hidden=true}
+  nb.addEventListener('click',function(e){e.stopPropagation();setMenu(!open)});
+  document.addEventListener('click',function(e){if(open&&!menu.contains(e.target))setMenu(false)});
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&open){setMenu(false);nb.focus()}});
   function mb(n){return Math.round(n/1048576)+' MB'}
   function render(rel){
     if(!rel)return;
     var A=rel.assets||[],by=function(re){for(var i=0;i<A.length;i++)if(re.test(A[i].name))return A[i];return null};
     var a={win:by(/win-x64\.exe$/),arm:by(/mac-arm64\.dmg$/),intel:by(/mac-x64\.dmg$/)},v=String(rel.tag_name||'').replace(/^v/,'');
-    var main=null,label=null,icon=null;
-    if(os==='win'&&a.win){main=a.win;label='Download for Windows';icon=WIN}
-    else if(os==='mac'){icon=APPLE;
-      if(arch==='x86'&&a.intel){main=a.intel;label='Download for Intel Mac'}
-      else if(a.arm){main=a.arm;label=arch==='arm'?'Download for Mac':'Download for Mac · Apple chip'}}
-    if(main){document.querySelectorAll('.dl-link').forEach(function(l){l.href=main.browser_download_url});$('dlLabel').textContent=label;$('dlIcon').outerHTML=icon.replace('<svg','<svg id="dlIcon"')}
-    var links=[['Windows',a.win],['Mac · Apple chip',a.arm],['Mac · Intel',a.intel]].filter(function(x){return x[1]&&x[1]!==main});
-    $('others').innerHTML=links.map(function(x){return '<a href="'+x[1].browser_download_url+'">'+x[0]+' · '+mb(x[1].size)+'</a>'}).join('')+'<a href="'+PAGE+'">All files</a>';
+    document.querySelectorAll('[data-k]').forEach(function(el){var x=a[el.dataset.k];if(x){el.href=x.browser_download_url;el.querySelector('small').textContent=mb(x.size)}});
     $('ver').textContent='Version '+v+' is out';
-    $('meta').textContent=(main?mb(main.size)+' · ':'')+(os==='phone'?'For Windows and Mac computers':'Windows and Mac');
+    $('meta').textContent=os==='phone'?'Install it on a Windows or Mac computer':'';
   }
   var go=function(){fetch(API).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(render)};
   if(os==='mac'&&navigator.userAgentData&&navigator.userAgentData.getHighEntropyValues)
-    navigator.userAgentData.getHighEntropyValues(['architecture']).then(function(h){arch=h.architecture||null}).catch(function(){}).then(go);
+    navigator.userAgentData.getHighEntropyValues(['architecture']).then(function(h){arch=h.architecture||null;mark()}).catch(function(){}).then(go);
   else go();
 
   /* ---------- live bits: clocks and the quick bar ---------- */
