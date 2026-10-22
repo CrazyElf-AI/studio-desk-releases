@@ -159,12 +159,19 @@ h1 .w{display:inline-block}
 .dark .chip{color:var(--violet-2);border-color:rgba(164,147,255,.35)}
 .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .key{text-align:left;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border-radius:24px;padding:28px 26px}
-.caps{display:flex;gap:8px;margin-bottom:26px}
+.caps{display:flex;gap:8px;margin-bottom:26px;perspective:420px}
 .cap{min-width:52px;height:52px;padding:0 14px;display:grid;place-items:center;font:500 15px/1 var(--fm);border-radius:12px;
   background:linear-gradient(180deg,#22222B,#16161D);border:1px solid var(--line-2);box-shadow:0 4px 0 #0A0A0E,0 6px 18px rgba(0,0,0,.5)}
 .key h3{margin:0 0 4px;font-size:18px;font-weight:500;letter-spacing:-.01em}
 .key p{margin:0;color:var(--muted);font-size:14.5px}
-.key .mac{font:400 12px/1 var(--fm);color:var(--faint);margin-top:16px}
+/* Windows / Mac pill for the shortcuts (dark) */
+.ktabs{position:relative;display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--line-2);border-radius:999px;padding:4px;margin:-20px 0 44px}
+.ktabs button{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--muted);font-weight:500;font-size:14px;padding:9px 18px;border-radius:999px;cursor:pointer;transition:color .4s}
+.ktabs button svg{width:15px;height:15px}
+.ktabs button[aria-selected=true]{color:var(--bg)}
+.ktabs .tab-ind{background:var(--text);box-shadow:0 6px 24px rgba(164,147,255,.35)}
+.cap{backface-visibility:hidden}
+.cap.sym{font:400 21px/1 var(--f)}
 
 footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--faint);font-size:14px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
@@ -303,10 +310,14 @@ footer a:hover{color:var(--text)}
   <div class="wrap center">
     <span class="chip">Shortcuts</span>
     <h2 class="reveal">Works from any app.</h2>
+    <div class="ktabs" role="tablist" aria-label="Shortcuts for"><span class="tab-ind" id="kInd" aria-hidden="true"></span>
+      <button role="tab" id="kWin" aria-selected="true" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.1L21 21v-8.5h-9.5v7.1zm0-15.2v7.1H21V3l-9.5 1.4z"/></svg>Windows</button>
+      <button role="tab" id="kMac" aria-selected="false" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg>Mac</button>
+    </div>
     <div class="keys">
-      <div class="key"><div class="caps"><span class="cap">Ctrl</span><span class="cap">Shift</span><span class="cap">Space</span></div><h3>Quick bar</h3><p>“icons done”, “start reel”, “stop”.</p><div class="mac">Mac ⌘ ⇧ Space</div></div>
-      <div class="key"><div class="caps"><span class="cap">Ctrl</span><span class="cap">Alt</span><span class="cap">T</span></div><h3>Timer</h3><p>Start or stop what you did last.</p><div class="mac">Mac ⌘ ⌥ T</div></div>
-      <div class="key"><div class="caps"><span class="cap">Ctrl</span><span class="cap">Alt</span><span class="cap">S</span></div><h3>Open</h3><p>Closing the window never stops the timer.</p><div class="mac">Mac ⌘ ⌥ S</div></div>
+      <div class="key"><div class="caps"><span class="cap" data-win="Ctrl" data-mac="⌘">Ctrl</span><span class="cap" data-win="Shift" data-mac="⇧">Shift</span><span class="cap" data-win="Space" data-mac="Space">Space</span></div><h3>Quick bar</h3><p>“icons done”, “start reel”, “stop”.</p></div>
+      <div class="key"><div class="caps"><span class="cap" data-win="Ctrl" data-mac="⌘">Ctrl</span><span class="cap" data-win="Alt" data-mac="⌥">Alt</span><span class="cap" data-win="T" data-mac="T">T</span></div><h3>Timer</h3><p>Start or stop what you did last.</p></div>
+      <div class="key"><div class="caps"><span class="cap" data-win="Ctrl" data-mac="⌘">Ctrl</span><span class="cap" data-win="Alt" data-mac="⌥">Alt</span><span class="cap" data-win="S" data-mac="S">S</span></div><h3>Open</h3><p>Closing the window never stops the timer.</p></div>
     </div>
   </div>
 </section>
@@ -352,6 +363,24 @@ footer a:hover{color:var(--text)}
       .to(to.items,{y:0,opacity:1,stagger:.06,duration:.5,ease:'power3.out'},'+=.02')}
   $('tWin').onclick=function(){show('win')};$('tMac').onclick=function(){show('mac')};
   if(os==='mac')show('mac',true);
+
+  /* Shortcuts: Windows / Mac. The pill slides; each key that differs flips over to its other face, in a wave */
+  var kos='win',kcaps=[].slice.call(document.querySelectorAll('.cap[data-win]'));
+  function kplace(){var b=$(kos==='win'?'kWin':'kMac'),ind=$('kInd');ind.style.width=b.offsetWidth+'px';ind.style.transform='translateX('+b.offsetLeft+'px)'}
+  function kshow(t,instant){
+    if(t===kos&&!instant)return;kos=t;
+    $('kWin').setAttribute('aria-selected',t==='win');$('kMac').setAttribute('aria-selected',t==='mac');kplace();
+    var flip=kcaps.filter(function(c){return c.dataset.win!==c.dataset.mac});
+    var face=function(c){c.textContent=c.dataset[kos];c.classList.toggle('sym',/^[⌘⇧⌥]$/.test(c.textContent))};
+    if(instant||!window.gsap||matchMedia('(prefers-reduced-motion: reduce)').matches){flip.forEach(face);return}
+    flip.forEach(function(c,k){
+      gsap.killTweensOf(c,'rotationX,opacity,scale');
+      gsap.timeline({delay:k*.045})
+        .to(c,{rotationX:-90,opacity:.25,scale:.92,duration:.18,ease:'power2.in',onComplete:function(){face(c)}})
+        .fromTo(c,{rotationX:90},{rotationX:0,opacity:1,scale:1,duration:.42,ease:'back.out(2.2)'})})}
+  $('kWin').onclick=function(){kshow('win')};$('kMac').onclick=function(){kshow('mac')};
+  if(os==='mac')kshow('mac',true);
+  kplace();if(document.fonts)document.fonts.ready.then(kplace);addEventListener('resize',kplace);
   place();if(document.fonts)document.fonts.ready.then(place);addEventListener('resize',place);
 
   /* the computer this is: its button goes first and lights up; the menu marks it too */
