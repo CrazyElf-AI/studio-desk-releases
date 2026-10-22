@@ -3,305 +3,445 @@
 <title>Studio Desk · Amble Artisans</title>
 <meta name="description" content="Studio Desk is the internal desktop app the Amble Artisans team uses to run its projects, time and approvals.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#171715;--ink-2:#232320;--ink-line:#3A3A35;--ink-text:#F4F4F1;--ink-muted:#A3A39B;--ink-faint:#7A7A73;
-  --canvas:#FAFAF8;--surface:#FFFFFF;--subtle:#F4F4F1;--line:#E0E0DB;
-  --text:#171715;--muted:#5C5C56;--faint:#7A7A73;
-  --accent:#3E63DD;--accent-soft:#EEF2FE;--good:#2F9E62;--good-soft:#E9F6EE;
+  --bg:#050507;--panel:#0C0C11;--panel-2:#13131A;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --text:#F5F5F7;--muted:#9B9BA7;--faint:#62626D;
+  --violet:#7C5CFF;--violet-2:#A493FF;--violet-soft:rgba(124,92,255,.16);
+  --good:#3DD68C;--good-soft:rgba(61,214,140,.12);
+  --paper:#FFFFFF;--paper-2:#F6F5FA;--ink:#0B0B10;--ink-muted:#5E5E6B;--ink-line:#E7E5EF;
   --f:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--fm:"Geist Mono",ui-monospace,Menlo,Consolas,monospace;
-  color-scheme:light}
+  color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--canvas);color:var(--text);font:16px/1.6 var(--f);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-kbd{font:500 12px/1 var(--fm);padding:4px 6px;border-radius:5px;border:1px solid var(--line);border-bottom-width:2px;background:var(--surface);color:var(--text);white-space:nowrap}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--f);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--violet-2);outline-offset:3px;border-radius:6px}
+
+/* ---------- nav ---------- */
+nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+nav.solid{background:rgba(5,5,7,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;height:68px;gap:36px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em}
+.mark{width:28px;height:28px;border-radius:8px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-size:11px;font-weight:700}
+.links{display:flex;gap:28px;margin:0 auto;font:500 12px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links a:hover{color:var(--text)}
+.pill-btn{display:inline-flex;align-items:center;gap:8px;background:var(--text);color:var(--bg);font-weight:600;font-size:14px;border-radius:999px;padding:9px 18px;transition:translate .2s,box-shadow .2s}
+.pill-btn:hover{translate:0 -1px;box-shadow:0 8px 30px rgba(164,147,255,.35)}
+.pill-btn svg{width:16px;height:16px}
 
 /* ---------- hero ---------- */
-.hero{background:var(--ink);color:var(--ink-text);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(600px 320px at 85% 10%,rgba(62,99,221,.28),transparent 70%),
-  radial-gradient(500px 300px at 10% 100%,rgba(47,158,98,.14),transparent 70%);pointer-events:none}
-.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);mask-image:linear-gradient(to bottom,#000,transparent 85%);pointer-events:none}
-nav{position:relative;z-index:1;display:flex;align-items:center;gap:12px;padding:22px 0}
-.mark{width:32px;height:32px;border-radius:8px;background:var(--ink-text);color:var(--ink);display:grid;place-items:center;font-weight:700;font-size:12px;letter-spacing:.02em}
-nav b{font-weight:600}nav .sp{flex:1}
-nav a.l{color:var(--ink-muted);text-decoration:none;font-size:14px;margin-left:12px}nav a.l:hover{color:var(--ink-text)}
-.hgrid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:56px 0 96px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);border:1px solid var(--ink-line);border-radius:999px;padding:7px 12px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 rgba(47,158,98,.6);animation:pulse 2s infinite;flex:none}
-@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(47,158,98,0)}100%{box-shadow:0 0 0 0 rgba(47,158,98,0)}}
-h1{font-size:clamp(40px,6vw,68px);line-height:1.02;letter-spacing:-.035em;font-weight:600;margin:22px 0 18px}
-h1 em{font-style:normal;color:var(--ink-muted)}
-.lede{font-size:18px;line-height:1.55;color:var(--ink-muted);max-width:520px;margin:0 0 32px}
-.dl{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:600 15px/1.2 var(--f);border-radius:10px;padding:14px 20px;transition:transform .15s,background .15s,border-color .15s;cursor:pointer;background:none}
-.btn.pri{background:var(--ink-text);color:var(--ink);border:1px solid var(--ink-text)}
-.btn.pri:hover{transform:translateY(-1px);background:#fff}
-.btn.sec{color:var(--ink-text);border:1px solid var(--ink-line)}
-.btn.sec:hover{border-color:var(--ink-muted)}
-.btn svg{width:18px;height:18px;flex:none}
-.btn:focus-visible,.tabs button:focus-visible,.others a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.meta{font:400 13px/1.5 var(--fm);color:var(--ink-faint);margin-top:14px}
-.meta a{color:var(--ink-muted)}
-.others{display:none;margin-top:14px;gap:8px;flex-wrap:wrap}
+.hero{position:relative;padding:150px 0 0;text-align:center;overflow:hidden;isolation:isolate}
+.beam{position:absolute;left:50%;top:-10%;width:560px;height:95%;transform:translateX(-50%);z-index:-1;pointer-events:none;transform-origin:top center;
+  background:radial-gradient(closest-side,rgba(124,92,255,.55),rgba(124,92,255,.12) 60%,transparent);filter:blur(30px)}
+.beam::after{content:"";position:absolute;left:50%;top:0;width:160px;height:100%;transform:translateX(-50%);
+  background:linear-gradient(to bottom,rgba(196,184,255,.55),rgba(124,92,255,.25) 50%,transparent);filter:blur(24px)}
+.stars{position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(1px 1px at 12% 22%,#fff 50%,transparent),radial-gradient(1px 1px at 78% 14%,#fff 50%,transparent),radial-gradient(1px 1px at 64% 38%,#ccc 50%,transparent),radial-gradient(1px 1px at 30% 44%,#bbb 50%,transparent),radial-gradient(1px 1px at 88% 52%,#ddd 50%,transparent),radial-gradient(1px 1px at 6% 60%,#aaa 50%,transparent),radial-gradient(1px 1px at 46% 12%,#eee 50%,transparent)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);border:1px solid var(--line-2);background:rgba(255,255,255,.03);border-radius:999px;padding:6px 14px 6px 10px}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good)}
+h1{font-size:clamp(42px,7vw,84px);line-height:.98;letter-spacing:-.045em;font-weight:500;margin:26px auto 22px;max-width:900px;text-wrap:balance}
+h1 .w{display:inline-block}
+.lede{color:var(--muted);font-size:18px;max-width:460px;margin:0 auto 34px}
+.cta{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap}
+.cta .pill-btn{padding:13px 24px;font-size:15px}
+.ghost{font-size:14px;color:var(--muted);border-bottom:1px solid var(--line-2);padding-bottom:2px;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer}
+.ghost:hover{color:var(--text)}
+.meta{font:400 12px/1 var(--fm);color:var(--faint);margin-top:18px;letter-spacing:.02em}
+.others{display:none;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}
 .others.on{display:flex}
-.others a{font:500 13px/1 var(--fm);color:var(--ink-muted);text-decoration:none;border:1px solid var(--ink-line);border-radius:7px;padding:9px 11px}
-.others a:hover{color:var(--ink-text);border-color:var(--ink-muted)}
+.others a{font:500 12px/1 var(--fm);color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:9px 13px}
+.others a:hover{color:var(--text);border-color:var(--violet-2)}
 
-/* the app, drawn */
-.stage{position:relative;min-height:360px}
-.win{position:absolute;inset:0 0 30px 40px;background:var(--canvas);border-radius:14px;box-shadow:0 40px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06);overflow:hidden;display:grid;grid-template-columns:120px 1fr;color:var(--text)}
-.win .side{background:var(--subtle);border-right:1px solid var(--line);padding:14px 10px}
-.win .side i{display:block;height:7px;border-radius:4px;background:var(--line);margin:10px 4px}
-.win .side i.on{background:var(--text);width:70%}
-.win .main{padding:16px 18px}
-.win h4{margin:0 0 12px;font-size:13px;font-weight:600}
-.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:12px}
-.row .t{flex:1;color:var(--text)}.row .c{color:var(--faint)}
-.pill{font:500 10px/1 var(--f);padding:4px 7px;border-radius:999px;background:var(--subtle);color:var(--muted);transition:background .3s,color .3s}
-.pill.done{background:var(--good-soft);color:var(--good)}
-.pill.prog{background:var(--accent-soft);color:var(--accent)}
-.quick{position:absolute;left:0;right:30px;bottom:0;background:var(--surface);border-radius:12px;box-shadow:0 24px 48px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.08);color:var(--text)}
-.quick .bar{display:flex;align-items:center;gap:10px;padding:12px 14px}
-.quick .sd{width:26px;height:26px;border-radius:7px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:700;flex:none}
-.quick .typed{flex:1;font-size:15px;min-height:22px;white-space:nowrap;overflow:hidden}
-.quick .caret{display:inline-block;width:1.5px;height:17px;background:var(--accent);vertical-align:-3px;margin-left:1px;animation:blink 1s steps(1) infinite}
+/* horizon + the app rising out of it */
+.horizon-wrap{position:relative;margin-top:40px;height:700px}
+.horizon{position:absolute;left:50%;top:70px;width:2400px;height:2400px;transform:translateX(-50%);border-radius:50%;background:var(--bg);z-index:0;
+  box-shadow:0 -1px 0 rgba(214,206,255,.9),0 -18px 60px rgba(124,92,255,.85),0 -60px 160px rgba(124,92,255,.5)}
+.horizon-glow{position:absolute;left:50%;top:-50px;width:1200px;height:260px;transform:translateX(-50%);z-index:0;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(180,165,255,.75),rgba(124,92,255,.25) 55%,transparent);filter:blur(20px)}
+.stage{position:relative;z-index:2;perspective:1600px;max-width:1040px;margin:0 auto;padding:150px 24px 0}
+.dash{transform-origin:50% 0;border-radius:22px;background:linear-gradient(180deg,#121219,#0A0A0F);border:1px solid var(--line-2);
+  box-shadow:0 -1px 0 rgba(255,255,255,.12) inset,0 50px 120px rgba(0,0,0,.7),0 0 0 6px rgba(255,255,255,.025);
+  display:grid;grid-template-columns:64px 1fr;text-align:left;overflow:hidden}
+.d-side{border-right:1px solid var(--line);padding:18px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.d-side span{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center}
+.d-side span.on{background:var(--violet-soft);border-color:rgba(124,92,255,.5)}
+.d-side svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.d-side span.on svg{stroke:var(--violet-2)}
+.d-main{padding:22px 24px 26px}
+.d-top{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.d-top h3{margin:0;font-size:22px;font-weight:400;letter-spacing:-.02em;flex:1}
+.timer{display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--fm);border:1px solid var(--line-2);border-radius:999px;padding:8px 14px 8px 10px;background:rgba(61,214,140,.06)}
+.timer i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good)}
+.timer b{font-weight:500;color:var(--muted)}
+.d-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+.card{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card-h{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);margin-bottom:12px}
+.card-h .ic{width:26px;height:26px;border-radius:8px;background:var(--violet-soft);display:grid;place-items:center}
+.card-h .ic svg{width:14px;height:14px;stroke:var(--violet-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card-h .sp{flex:1}
+.big{font-size:34px;letter-spacing:-.03em;font-weight:400;line-height:1}
+.big small{font-size:15px;color:var(--faint);margin-left:6px}
+.delta{display:inline-block;font:500 11px/1 var(--fm);color:var(--good);background:var(--good-soft);border-radius:6px;padding:5px 7px;margin:10px 0 2px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:118px;margin-top:14px}
+.bars div{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));transform-origin:bottom;position:relative}
+.bars div.hi{background:linear-gradient(180deg,var(--violet),rgba(124,92,255,.35));box-shadow:0 0 30px rgba(124,92,255,.35)}
+.days{display:flex;gap:10px;margin-top:8px;font:400 11px/1 var(--fm);color:var(--faint)}.days span{flex:1;text-align:center}
+.task{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.task:first-of-type{border-top:0}
+.task .av{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font:600 11px/1 var(--f);flex:none}
+.task .t{flex:1;min-width:0}.task .t b{display:block;font-weight:500}.task .t small{color:var(--faint);font-size:12px}
+.st{font:500 11px/1 var(--f);border-radius:999px;padding:5px 9px;background:rgba(255,255,255,.06);color:var(--muted);white-space:nowrap}
+.st.prog{background:var(--violet-soft);color:var(--violet-2)}
+.st.done{background:var(--good-soft);color:var(--good)}
+
+.quick{position:absolute;z-index:3;right:-28px;bottom:90px;width:420px;background:rgba(19,19,26,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line-2);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(124,92,255,.12);text-align:left;overflow:hidden}
+.quick .bar{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.quick .sd{width:28px;height:28px;border-radius:8px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-size:10px;font-weight:700;flex:none}
+.quick .typed{flex:1;font-size:15px;white-space:nowrap;overflow:hidden;min-height:22px}
+.caret{display:inline-block;width:1.5px;height:17px;background:var(--violet-2);vertical-align:-3px;margin-left:1px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.quick .res{border-top:1px solid var(--line);padding:9px 14px;font-size:13px;color:var(--good);background:var(--good-soft);display:none;border-radius:0 0 12px 12px}
-.quick .res.on{display:block}
-.chip{position:absolute;top:-16px;right:16px;display:flex;align-items:center;gap:8px;background:var(--ink-2);border:1px solid var(--ink-line);color:var(--ink-text);border-radius:999px;padding:7px 12px 7px 10px;font:500 12px/1 var(--fm);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.kb{font:500 11px/1 var(--fm);color:var(--muted);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;padding:5px 7px}
+.quick .res{border-top:1px solid transparent;padding:0 16px;max-height:0;font-size:13px;color:var(--good);background:rgba(61,214,140,.06);opacity:0;transition:opacity .25s,max-height .3s,padding .3s}
+.quick .res.on{opacity:1;max-height:44px;padding:10px 16px;border-top-color:var(--line)}
 
-/* ---------- sections ---------- */
-section{padding:88px 0}
-.kicker{font:500 12px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 0 14px}
-h2{font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.025em;font-weight:600;margin:0 0 14px;max-width:640px}
-.sub{color:var(--muted);max-width:600px;margin:0 0 44px;font-size:17px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.f{background:var(--surface);padding:28px 26px 30px}
-.f .ic{width:36px;height:36px;border-radius:9px;background:var(--subtle);display:grid;place-items:center;margin-bottom:18px}
-.f .ic svg{width:18px;height:18px;stroke:var(--text);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.f h3{font-size:16px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
-.f p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
-.f p kbd{font-size:11px}
+/* ---------- white panel ---------- */
+.paper{position:relative;z-index:5;background:var(--paper);color:var(--ink);border-radius:36px;margin-top:-120px;padding:110px 0 120px}
+.chip{display:inline-flex;font-size:13px;color:var(--violet);border:1px solid rgba(124,92,255,.35);border-radius:999px;padding:6px 14px}
+.paper h2,.dark h2{font-size:clamp(32px,4.6vw,54px);line-height:1.04;letter-spacing:-.035em;font-weight:400;margin:22px auto 56px;max-width:720px;text-align:center}
+.center{text-align:center}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{text-align:left;background:var(--ink);color:var(--text);border-radius:24px;padding:14px;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.feat .demo{height:230px;border-radius:16px;background:radial-gradient(120% 90% at 50% 120%,rgba(124,92,255,.45),transparent 60%),#0E0E14;border:1px solid var(--line);position:relative;overflow:hidden;display:grid;place-items:center}
+.feat h3{margin:20px 10px 4px;font-size:19px;font-weight:500;letter-spacing:-.015em}
+.feat p{margin:0 10px 12px;color:var(--muted);font-size:14.5px;line-height:1.5}
+/* demo 1: timer */
+.clock{font:400 46px/1 var(--fm);letter-spacing:-.04em}
+.clock-sub{font:500 12px/1 var(--fm);color:var(--muted);margin-top:12px;text-align:center}
+.ring{position:absolute;width:190px;height:190px;border-radius:50%;border:1px dashed rgba(164,147,255,.35)}
+/* demo 2: request */
+.req{width:82%;background:var(--panel-2);border:1px solid var(--line-2);border-radius:14px;padding:14px}
+.req small{font:500 11px/1 var(--fm);color:var(--faint);letter-spacing:.04em}
+.req b{display:block;font-weight:500;font-size:14px;margin:8px 0 12px}
+.req .row{display:flex;gap:8px}
+.req button{flex:1;border-radius:9px;padding:8px;font-size:13px;font-weight:500;border:1px solid var(--line-2);background:transparent;cursor:default}
+.req button.ok{background:var(--text);color:var(--bg);border-color:var(--text);position:relative;overflow:hidden}
+.req .stamp{position:absolute;inset:0;display:grid;place-items:center;background:var(--good);color:#04140C;font-weight:600;transform:translateY(100%)}
+/* demo 3: notification */
+.toast{width:84%;display:flex;gap:12px;align-items:flex-start;background:rgba(30,30,40,.9);border:1px solid var(--line-2);border-radius:14px;padding:12px 14px;box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.toast .mark{width:30px;height:30px;flex:none}
+.toast b{display:block;font-size:13px;font-weight:600}
+.toast span{font-size:12.5px;color:var(--muted);line-height:1.4}
+.toast.ghosted{position:absolute;opacity:.35;transform:translateY(-58px) scale(.92)}
 
-.install{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.tabs{display:inline-flex;background:var(--subtle);border:1px solid var(--line);border-radius:10px;padding:4px;margin-bottom:32px}
-.tabs button{font:500 14px var(--f);border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:7px;cursor:pointer}
-.tabs button[aria-selected=true]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px var(--line)}
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+/* install */
+.install{margin-top:130px}
+.tabs{display:inline-flex;background:var(--paper-2);border:1px solid var(--ink-line);border-radius:999px;padding:4px;margin-bottom:44px}
+.tabs button{border:0;background:transparent;color:var(--ink-muted);font-weight:500;font-size:14px;padding:9px 20px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--ink);color:#fff}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s;text-align:left}
 .steps[hidden]{display:none}
-.steps li{counter-increment:s;padding-top:18px;border-top:2px solid var(--text);color:var(--muted);font-size:14.5px;line-height:1.55}
-.steps li::before{content:"0" counter(s);display:block;font:500 13px/1 var(--fm);color:var(--text);margin-bottom:12px}
-.steps li b{color:var(--text);font-weight:600}
-.note{margin:28px 0 0;font-size:14px;color:var(--muted);background:var(--subtle);border:1px solid var(--line);border-radius:10px;padding:14px 16px;max-width:760px}
-.note b{color:var(--text)}
+.steps li{counter-increment:s;background:var(--paper-2);border:1px solid var(--ink-line);border-radius:20px;padding:22px 20px 24px;color:var(--ink-muted);font-size:14.5px;line-height:1.55}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font:500 13px/1 var(--fm);margin-bottom:16px}
+.steps li b{color:var(--ink);font-weight:600}
+.mac-note{margin:22px auto 0;max-width:640px;color:var(--ink-muted);font-size:14px}
 
-.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.key{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--surface)}
-.key .combo{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.key .combo kbd{font-size:14px;padding:7px 10px;border-bottom-width:3px}
-.key h3{margin:0 0 4px;font-size:15px;font-weight:600}
-.key p{margin:0;color:var(--muted);font-size:14px}
-.key .mac{font:400 12px/1 var(--fm);color:var(--faint);margin-top:12px}
+/* ---------- shortcuts (dark) ---------- */
+.dark{position:relative;padding:130px 0 120px;overflow:hidden;isolation:isolate}
+.dark::before{content:"";position:absolute;left:50%;bottom:-420px;width:1100px;height:600px;transform:translateX(-50%);z-index:-1;
+  background:radial-gradient(closest-side,rgba(124,92,255,.35),transparent);filter:blur(10px)}
+.dark .chip{color:var(--violet-2);border-color:rgba(164,147,255,.35)}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.key{text-align:left;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border-radius:24px;padding:28px 26px}
+.caps{display:flex;gap:8px;margin-bottom:26px}
+.cap{min-width:52px;height:52px;padding:0 14px;display:grid;place-items:center;font:500 15px/1 var(--fm);border-radius:12px;
+  background:linear-gradient(180deg,#22222B,#16161D);border:1px solid var(--line-2);box-shadow:0 4px 0 #0A0A0E,0 6px 18px rgba(0,0,0,.5)}
+.key h3{margin:0 0 4px;font-size:18px;font-weight:500;letter-spacing:-.01em}
+.key p{margin:0;color:var(--muted);font-size:14.5px}
+.key .mac{font:400 12px/1 var(--fm);color:var(--faint);margin-top:16px}
 
-footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--faint);font-size:14px}
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--faint);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
 footer .sp{flex:1}
-footer a{color:var(--muted)}
+footer a:hover{color:var(--text)}
 
-@media (max-width:900px){
-  .hgrid{grid-template-columns:1fr;gap:56px;padding:32px 0 72px}
-  .stage{min-height:320px}
-  .grid{grid-template-columns:1fr 1fr}
+@media (max-width:980px){
+  .links{display:none}
+  nav .wrap{justify-content:space-between}
+  .d-grid{grid-template-columns:1fr}
+  .quick{right:12px;width:min(420px,calc(100% - 24px))}
+  .feats,.keys{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
-  .keys{grid-template-columns:1fr}
+  .horizon-wrap{height:auto;padding-bottom:150px}
 }
-@media (max-width:560px){
+@media (max-width:600px){
   .wrap{padding:0 16px}
-  nav a.l.hide{display:none}
-  .grid,.steps{grid-template-columns:1fr}
-  .win{inset:0 0 40px 0;grid-template-columns:1fr}.win .side{display:none}
-  .row .c{display:none}
-  .quick{right:0}
-  .chip{right:8px}
-  section{padding:64px 0}
+  .hero{padding-top:120px}
+  .lede{font-size:16px}
+  .stage{padding:0 12px}
+  .dash{grid-template-columns:1fr}.d-side{display:none}
+  .d-main{padding:16px}
+  .d-top h3{font-size:18px}
+  .card.tasks .task:nth-of-type(n+3){display:none}
+  .steps{grid-template-columns:1fr}
+  .paper{border-radius:26px;padding:80px 0 90px}
+  .stage{padding-top:110px}
+  .nav-dl span{display:none}
 }
-@media (prefers-reduced-motion:reduce){.dot,.quick .caret{animation:none}.btn{transition:none}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}html{scroll-behavior:auto}}
 </style></head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <nav>
-      <div class="mark">SD</div><b>Studio Desk</b><span class="sp"></span>
-      <a class="l hide" href="#install">Install</a>
-      <a class="l hide" href="#shortcuts">Shortcuts</a>
-      <a class="l" href="privacy.html">Privacy</a>
-    </nav>
-    <div class="hgrid">
-      <div>
-        <span class="eyebrow"><span class="dot"></span>Amble Artisans · Bengaluru</span>
-        <h1>The studio,<br><em>one keystroke away.</em></h1>
-        <p class="lede">Studio Desk is the app Amble Artisans runs on: clients, projects, deliverables and tasks, time, plans, budgets, invoices and approvals. It sits in your tray and keeps the timer running, even with the window closed.</p>
-        <div class="dl">
-          <a class="btn pri" id="dlMain" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest">
-            <svg id="dlIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
-            <span id="dlLabel">Download Studio Desk</span></a>
-          <button class="btn sec" id="dlMore" type="button" aria-expanded="false" aria-controls="others">Other computers</button>
-        </div>
-        <div class="others" id="others"><a href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest">All files</a></div>
-        <div class="meta" id="meta">For the studio team and invited clients. A partner adds you; you sign in with Google.</div>
-      </div>
+<nav id="nav"><div class="wrap">
+  <a class="brand" href="#top"><span class="mark">SD</span>Studio Desk</a>
+  <div class="links"><a href="#how">How it works</a><a href="#install">Install</a><a href="#keys">Shortcuts</a><a href="privacy.html">Privacy</a></div>
+  <a class="pill-btn nav-dl dl-link" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg><span>Download</span></a>
+</div></nav>
 
-      <div class="stage" aria-hidden="true">
-        <div class="win">
-          <div class="side"><i class="on"></i><i></i><i style="width:60%"></i><i></i><i style="width:50%"></i><i></i></div>
-          <div class="main">
-            <h4>My tasks · this week</h4>
-            <div class="row"><span class="t">Icons</span><span class="c">Lottie icon set</span><span class="pill prog" id="p1">In progress</span></div>
-            <div class="row"><span class="t">Resize</span><span class="c">Diwali carousel</span><span class="pill" id="p2">To do</span></div>
-            <div class="row"><span class="t">Sound</span><span class="c">Explainer</span><span class="pill">To do</span></div>
-            <div class="row"><span class="t">Design variants</span><span class="c">Yoga retreat</span><span class="pill">To do</span></div>
+<header class="hero" id="top">
+  <div class="stars"></div>
+  <div class="beam" id="beam"></div>
+  <div class="wrap">
+    <span class="tag" id="tag"><i></i><span id="ver">Amble Artisans · Bengaluru</span></span>
+    <h1 id="h1">Run the studio from your tray.</h1>
+    <p class="lede" id="lede">Projects, time and approvals for the Amble Artisans team. Always one keystroke away.</p>
+    <div class="cta" id="cta">
+      <a class="pill-btn dl-link" id="dlMain" href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest">
+        <svg id="dlIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+        <span id="dlLabel">Download Studio Desk</span></a>
+      <button class="ghost" id="dlMore" type="button" aria-expanded="false" aria-controls="others">Other computers</button>
+    </div>
+    <div class="others" id="others"><a href="https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest">All files</a></div>
+    <div class="meta" id="meta">&nbsp;</div>
+  </div>
+
+  <div class="horizon-wrap">
+    <div class="horizon-glow" id="hglow"></div>
+    <div class="horizon" id="horizon"></div>
+    <div class="stage" aria-hidden="true">
+      <div class="dash" id="dash">
+        <div class="d-side">
+          <span class="on"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></span>
+          <span><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2M10 3h4"/></svg></span>
+          <span><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span>
+          <span><svg viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/></svg></span>
+          <span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>
+        </div>
+        <div class="d-main">
+          <div class="d-top"><h3>Good morning, Ritesh</h3><span class="timer"><i></i><span id="clock">1:24:08</span><b>Icons</b></span></div>
+          <div class="d-grid">
+            <div class="card">
+              <div class="card-h"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2"/></svg></span>This week<span class="sp"></span></div>
+              <div class="big"><span class="count" data-to="31.5" data-dec="1">31.5</span><small>/ 40 h</small></div>
+              <span class="delta">+4.5 h on last week</span>
+              <div class="bars" id="bars"><div style="height:62%"></div><div style="height:78%"></div><div class="hi" style="height:96%"></div><div style="height:70%"></div><div style="height:38%"></div></div>
+              <div class="days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+            </div>
+            <div class="card tasks">
+              <div class="card-h"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span>Due this week<span class="sp"></span><span class="st" id="cnt">4 open</span></div>
+              <div class="task"><span class="av" style="background:#2A2346;color:#C9BEFF">PO</span><span class="t"><b>Icons</b><small>Lottie icon set · Pixel Orbit</small></span><span class="st prog" id="s1">In progress</span></div>
+              <div class="task"><span class="av" style="background:#14301F;color:#7FE3AE">BD</span><span class="t"><b>Resize</b><small>Diwali carousel · Bloom Dental</small></span><span class="st" id="s2">To do</span></div>
+              <div class="task"><span class="av" style="background:#33261A;color:#F2C38B">NW</span><span class="t"><b>Design variants</b><small>Yoga retreat ads · Northwind</small></span><span class="st">To do</span></div>
+              <div class="task"><span class="av" style="background:#2A2346;color:#C9BEFF">PO</span><span class="t"><b>Sound</b><small>Explainer · Pixel Orbit</small></span><span class="st">To do</span></div>
+            </div>
           </div>
         </div>
-        <div class="quick">
-          <span class="chip"><span class="dot"></span><span id="clock">1:24</span> · Icons</span>
-          <div class="bar"><div class="sd">SD</div><div class="typed"><span id="typed"></span><span class="caret"></span></div><kbd>Enter</kbd></div>
-          <div class="res" id="res"></div>
-        </div>
+      </div>
+      <div class="quick" id="quick">
+        <div class="bar"><div class="sd">SD</div><div class="typed"><span id="typed"></span><span class="caret"></span></div><span class="kb">Ctrl ⇧ Space</span></div>
+        <div class="res" id="res">&nbsp;</div>
       </div>
     </div>
   </div>
 </header>
 
-<section>
-  <div class="wrap">
-    <p class="kicker">What it does</p>
-    <h2>Everything the studio runs on, in one quiet window.</h2>
-    <p class="sub">Live for everyone at once. When a partner moves a deadline, your screen changes too.</p>
-    <div class="grid">
-      <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></div>
-        <h3>A timer that never forgets</h3><p>Start it on any task. It keeps running in the tray, survives restarts, and asks what to do if you've stepped away.</p></div>
-      <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7 12h4M14 12h3"/></svg></div>
-        <h3>The quick bar</h3><p>Press <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Space</kbd> anywhere and type “icons done” or “log 2h on reel”. That's it.</p></div>
-      <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></div>
-        <h3>Work, planned</h3><p>Clients, projects, deliverables and tasks, with the week laid out by person so nobody is quietly overloaded.</p></div>
-      <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></div>
-        <h3>Approvals that move</h3><p>Ask for a change and the partners get it straight away. Clients approve deliverables from their own view.</p></div>
-      <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
-        <h3>Finals in Drive</h3><p>Upload a final and it lands in the right client folder once approved. Everything is backed up to a sheet every night.</p></div>
-      <div class="f"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 12a10 10 0 0 1 20 0M5 12a7 7 0 0 1 14 0"/><circle cx="12" cy="12" r="1.5"/><path d="M3 21L21 3"/></svg></div>
-        <h3>Works offline</h3><p>Lose the Wi‑Fi and you can still see everything and run the timer. Changes catch up when you're back.</p></div>
+<main class="paper">
+  <section class="wrap center" id="how">
+    <span class="chip">How it works</span>
+    <h2 class="reveal">Less clicking. More making.</h2>
+    <div class="feats">
+      <article class="feat">
+        <div class="demo"><span class="ring" id="ring"></span><div><div class="clock" id="bigclock">00:42:17</div><div class="clock-sub">Clinic tour reel</div></div></div>
+        <h3>A timer that stays</h3><p>Runs in the tray, survives restarts, asks when you step away.</p>
+      </article>
+      <article class="feat">
+        <div class="demo"><div class="req"><small>REQUEST · ISHA</small><b>Move “Edit” to Fri 30 Oct</b><div class="row"><button type="button" tabindex="-1">Discuss</button><button class="ok" type="button" tabindex="-1">Approve<span class="stamp" id="stamp">Approved</span></button></div></div></div>
+        <h3>Ask once, approved</h3><p>Changes go to the partners as requests. One click to apply.</p>
+      </article>
+      <article class="feat">
+        <div class="demo"><div class="toast ghosted"><span class="mark">SD</span><div><b>Approval waiting</b><span>Add task · from Rohan</span></div></div>
+          <div class="toast" id="toast"><span class="mark">SD</span><div><b>Task done</b><span>Neha marked “Icons” done · Pixel Orbit</span></div></div></div>
+        <h3>Done reaches you</h3><p>Partners hear the moment work is finished or waiting.</p>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="install" id="install">
-  <div class="wrap">
-    <p class="kicker">Install</p>
-    <h2>Two minutes, once.</h2>
-    <p class="sub">After this, Studio Desk starts when you log in.</p>
+  <section class="wrap center install" id="install">
+    <span class="chip">Install</span>
+    <h2 class="reveal">Two minutes, once.</h2>
     <div class="tabs" role="tablist">
       <button role="tab" id="tWin" aria-selected="true" aria-controls="sWin" type="button">Windows</button>
       <button role="tab" id="tMac" aria-selected="false" aria-controls="sMac" type="button">Mac</button>
     </div>
     <ol class="steps" id="sWin" role="tabpanel" aria-labelledby="tWin">
-      <li><b>Download</b> the file ending in <b>win-x64.exe</b> and open it.</li>
-      <li>If Windows says “Windows protected your PC”, click <b>More info</b>, then <b>Run anyway</b>.</li>
-      <li>Click <b>Continue with Google</b> and choose the account a partner added for you.</li>
-      <li>Studio Desk now lives in the <b>tray</b>, bottom-right near the clock. It updates itself.</li>
+      <li>Download the <b>win-x64.exe</b> and open it.</li>
+      <li>If Windows warns you: <b>More info › Run anyway</b>.</li>
+      <li><b>Continue with Google</b>, with the account a partner added.</li>
+      <li>It lives in the <b>tray</b> and updates itself.</li>
     </ol>
     <ol class="steps" id="sMac" role="tabpanel" aria-labelledby="tMac" hidden>
-      <li>Open the <b>.dmg</b> (<b>arm64</b> for Apple chips, <b>x64</b> for Intel) and drag Studio Desk into <b>Applications</b>.</li>
-      <li>Open it. The first time, the Mac says it can't check the app: click <b>Done</b>, then <b>System Settings › Privacy &amp; Security › Open Anyway</b>.</li>
-      <li>Sign in with Google. If asked about “Safe Storage” in the keychain, click <b>Always Allow</b>.</li>
-      <li>Studio Desk lives in the <b>menu bar</b> at the top of the screen.</li>
+      <li>Open the <b>.dmg</b>, drag Studio Desk into <b>Applications</b>.</li>
+      <li>First open: <b>System Settings › Privacy &amp; Security › Open Anyway</b>.</li>
+      <li>Sign in with Google. Keychain asks? <b>Always Allow</b>.</li>
+      <li>It lives in the <b>menu bar</b>.</li>
     </ol>
-    <p class="note" id="macNote" hidden><b>Updates on a Mac:</b> when a new version is out you get a notice, and the menu shows <b>Download update</b>. Drag the new version into Applications and choose <b>Replace</b>. Your sign-in and settings stay. Not sure which Mac you have? Apple menu › About This Mac: “Chip: Apple M…” means Apple chip.</p>
-  </div>
-</section>
+    <p class="mac-note" id="macNote" hidden>New version out? The menu shows <b>Download update</b>. Drag it into Applications and choose Replace. Apple chip = <b>arm64</b>, Intel = <b>x64</b>.</p>
+  </section>
+</main>
 
-<section id="shortcuts">
-  <div class="wrap">
-    <p class="kicker">Shortcuts</p>
-    <h2>Work from any app.</h2>
-    <p class="sub">These work even when Studio Desk is closed to the tray. Change them in Preferences.</p>
+<section class="dark" id="keys">
+  <div class="wrap center">
+    <span class="chip">Shortcuts</span>
+    <h2 class="reveal">Works from any app.</h2>
     <div class="keys">
-      <div class="key"><div class="combo"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Space</kbd></div><h3>Quick bar</h3><p>“start clinic reel”, “stop”, “reel due friday”.</p><div class="mac">Mac: ⌘ ⇧ Space</div></div>
-      <div class="key"><div class="combo"><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>T</kbd></div><h3>Start or stop the timer</h3><p>Starts again whatever you did last.</p><div class="mac">Mac: ⌘ ⌥ T</div></div>
-      <div class="key"><div class="combo"><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>S</kbd></div><h3>Open Studio Desk</h3><p>Closing the window never stops the timer.</p><div class="mac">Mac: ⌘ ⌥ S</div></div>
+      <div class="key"><div class="caps"><span class="cap">Ctrl</span><span class="cap">Shift</span><span class="cap">Space</span></div><h3>Quick bar</h3><p>“icons done”, “start reel”, “stop”.</p><div class="mac">Mac ⌘ ⇧ Space</div></div>
+      <div class="key"><div class="caps"><span class="cap">Ctrl</span><span class="cap">Alt</span><span class="cap">T</span></div><h3>Timer</h3><p>Start or stop what you did last.</p><div class="mac">Mac ⌘ ⌥ T</div></div>
+      <div class="key"><div class="caps"><span class="cap">Ctrl</span><span class="cap">Alt</span><span class="cap">S</span></div><h3>Open</h3><p>Closing the window never stops the timer.</p><div class="mac">Mac ⌘ ⌥ S</div></div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <span>Studio Desk · Amble Artisans, Bengaluru</span><span class="sp"></span>
-    <a href="privacy.html">Privacy policy</a>
-    <a href="mailto:dhanderitesh2003@gmail.com">dhanderitesh2003@gmail.com</a>
-  </div>
-</footer>
+<footer><div class="wrap">
+  <span class="brand"><span class="mark">SD</span>Studio Desk</span><span class="sp"></span>
+  <span>Amble Artisans, Bengaluru</span>
+  <a href="privacy.html">Privacy</a>
+  <a href="mailto:dhanderitesh2003@gmail.com">dhanderitesh2003@gmail.com</a>
+</div></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (function(){
+  var $=function(id){return document.getElementById(id)};
   var PAGE='https://github.com/CrazyElf-AI/studio-desk-releases/releases/latest';
   var API='https://api.github.com/repos/CrazyElf-AI/studio-desk-releases/releases/latest';
-  var $=function(id){return document.getElementById(id)};
+
+  /* nav turns solid once you scroll */
+  var nav=$('nav');addEventListener('scroll',function(){nav.classList.toggle('solid',scrollY>20)},{passive:true});
+
+  /* ---------- the right download for this computer ---------- */
   var ua=navigator.userAgent||'',plat=(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||'';
   var os=/iPhone|iPad|Android/i.test(ua)?'phone':/Win/i.test(plat)||/Windows/.test(ua)?'win':/Mac/i.test(plat)||/Mac OS X/.test(ua)?'mac':'other';
   var APPLE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.6 8.3 4.8 9.7c-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.6-1-2.6-3.7zM14.1 5.7c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.3z"/></svg>';
   var WIN='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.1L21 21v-8.5h-9.5v7.1zm0-15.2v7.1H21V3l-9.5 1.4z"/></svg>';
-  var arch=null; /* Chrome and Edge can tell an Apple-chip Mac from an Intel one; Safari can't */
-
+  var arch=null;
   function show(tab){var w=tab==='win';$('tWin').setAttribute('aria-selected',w);$('tMac').setAttribute('aria-selected',!w);$('sWin').hidden=!w;$('sMac').hidden=w;$('macNote').hidden=w}
   $('tWin').onclick=function(){show('win')};$('tMac').onclick=function(){show('mac')};
   if(os==='mac')show('mac');
   $('dlMore').onclick=function(){var o=$('others'),on=!o.classList.contains('on');o.classList.toggle('on',on);this.setAttribute('aria-expanded',on)};
-
   function mb(n){return Math.round(n/1048576)+' MB'}
-  function pick(assets){
-    var by=function(re){for(var i=0;i<assets.length;i++)if(re.test(assets[i].name))return assets[i];return null};
-    return{win:by(/win-x64\.exe$/),arm:by(/mac-arm64\.dmg$/),intel:by(/mac-x64\.dmg$/)}}
   function render(rel){
-    if(!rel)return;   /* GitHub didn't answer: the button still opens the download page */
-    var a=pick(rel.assets||[]),v=String(rel.tag_name||'').replace(/^v/,'');
+    if(!rel)return;
+    var A=rel.assets||[],by=function(re){for(var i=0;i<A.length;i++)if(re.test(A[i].name))return A[i];return null};
+    var a={win:by(/win-x64\.exe$/),arm:by(/mac-arm64\.dmg$/),intel:by(/mac-x64\.dmg$/)},v=String(rel.tag_name||'').replace(/^v/,'');
     var main=null,label=null,icon=null;
     if(os==='win'&&a.win){main=a.win;label='Download for Windows';icon=WIN}
     else if(os==='mac'){icon=APPLE;
       if(arch==='x86'&&a.intel){main=a.intel;label='Download for Intel Mac'}
-      else if(a.arm){main=a.arm;label=arch==='arm'?'Download for Mac':'Download for Mac (Apple chip)'}}
-    if(main){$('dlMain').href=main.browser_download_url;$('dlLabel').textContent=label;$('dlIcon').outerHTML=icon.replace('<svg','<svg id="dlIcon"')}
+      else if(a.arm){main=a.arm;label=arch==='arm'?'Download for Mac':'Download for Mac · Apple chip'}}
+    if(main){document.querySelectorAll('.dl-link').forEach(function(l){l.href=main.browser_download_url});$('dlLabel').textContent=label;$('dlIcon').outerHTML=icon.replace('<svg','<svg id="dlIcon"')}
     var links=[['Windows',a.win],['Mac · Apple chip',a.arm],['Mac · Intel',a.intel]].filter(function(x){return x[1]&&x[1]!==main});
     $('others').innerHTML=links.map(function(x){return '<a href="'+x[1].browser_download_url+'">'+x[0]+' · '+mb(x[1].size)+'</a>'}).join('')+'<a href="'+PAGE+'">All files</a>';
-    var d=new Date(rel.published_at).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
-    $('meta').innerHTML='Version '+v+' · '+d+(main?' · '+mb(main.size):'')+(os==='phone'?' · Runs on Windows and Mac computers':'')+' · <a href="'+PAGE+'">release notes</a>'}
+    $('ver').textContent='Version '+v+' is out';
+    $('meta').textContent=(main?mb(main.size)+' · ':'')+(os==='phone'?'For Windows and Mac computers':'Windows and Mac');
+  }
   var go=function(){fetch(API).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(render)};
   if(os==='mac'&&navigator.userAgentData&&navigator.userAgentData.getHighEntropyValues)
     navigator.userAgentData.getHighEntropyValues(['architecture']).then(function(h){arch=h.architecture||null}).catch(function(){}).then(go);
   else go();
 
-  /* the quick bar, typing what people actually type */
-  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---------- live bits: clocks and the quick bar ---------- */
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pad=function(n){return(n<10?'0':'')+n},fmt=function(s){return Math.floor(s/3600)+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60)};
+  var t1=5048,t2=2537;
+  if(!still)setInterval(function(){t1++;t2++;$('clock').textContent=fmt(t1);$('bigclock').textContent=pad(Math.floor(t2/3600))+':'+pad(Math.floor(t2%3600/60))+':'+pad(t2%60)},1000);
   var LINES=[
-    {t:'icons done',r:'✓ Icons → Done',p:['p1','done','Done']},
-    {t:'start resize on diwali carousel',r:'Timer started · Resize',p:['p2','prog','In progress']},
-    {t:'sound due friday',r:'✓ Sound due Friday'},
-    {t:'log 1h 30m on icons',r:'Logged 1:30 · Icons'}];
+    {t:'icons done',r:'✓ Icons → Done',s:['s1','done','Done'],c:'3 open'},
+    {t:'start resize on diwali carousel',r:'Timer started · Resize',s:['s2','prog','In progress']},
+    {t:'design variants due friday',r:'✓ Design variants due Friday'},
+    {t:'log 1h 30m on sound',r:'Logged 1:30 · Sound'}];
   var typed=$('typed'),res=$('res'),i=0;
-  function reset(){var p=$('p1');p.className='pill prog';p.textContent='In progress';p=$('p2');p.className='pill';p.textContent='To do'}
+  function reset(){$('s1').className='st prog';$('s1').textContent='In progress';$('s2').className='st';$('s2').textContent='To do';$('cnt').textContent='4 open'}
   function play(){
     var L=LINES[i%LINES.length],n=0;if(i%LINES.length===0)reset();
     res.classList.remove('on');typed.textContent='';
     var k=setInterval(function(){typed.textContent=L.t.slice(0,++n);if(n>=L.t.length){clearInterval(k);
       setTimeout(function(){res.textContent=L.r;res.classList.add('on');
-        if(L.p){var p=$(L.p[0]);p.className='pill '+L.p[1];p.textContent=L.p[2]}
-        i++;setTimeout(play,2600)},450)}},55)}
-  if(still){typed.textContent=LINES[0].t;res.textContent=LINES[0].r;res.classList.add('on')}else setTimeout(play,600);
-  /* the running timer chip */
-  var s=84*60;if(!still)setInterval(function(){s++;var h=Math.floor(s/3600),m=Math.floor(s%3600/60);$('clock').textContent=h+':'+(m<10?'0':'')+m},1000);
+        if(L.s){var s=$(L.s[0]);s.className='st '+L.s[1];s.textContent=L.s[2];if(window.gsap)gsap.fromTo(s,{scale:.7},{scale:1,duration:.5,ease:'back.out(3)'})}
+        if(L.c)$('cnt').textContent=L.c;
+        i++;setTimeout(play,2600)},420)}},55)}
+  if(still){typed.textContent=LINES[0].t;res.textContent=LINES[0].r;res.classList.add('on')}
+
+  /* ---------- motion (GSAP). Without it, or with reduced motion, everything simply shows. ---------- */
+  if(!window.gsap||still){if(!still)play();return}
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* headline: words rise out of a blur */
+  var h1=$('h1');h1.innerHTML=h1.textContent.split(' ').map(function(w){return '<span class="w">'+w+'</span>'}).join(' ');
+
+  var intro=gsap.timeline({defaults:{ease:'power3.out'}});
+  intro.from('#beam',{scaleY:0,opacity:0,duration:1.6,ease:'power2.out'},0)
+       .from('nav .wrap > *',{y:-14,opacity:0,stagger:.08,duration:.7},.15)
+       .from('#tag',{y:14,opacity:0,duration:.7},.3)
+       .from('#h1 .w',{yPercent:60,opacity:0,filter:'blur(14px)',stagger:.07,duration:1},.4)
+       .from('#lede',{y:16,opacity:0,duration:.8},.85)
+       .from('#cta > *',{y:16,opacity:0,stagger:.1,duration:.7},1)
+       .from('#horizon',{y:140,duration:1.6,ease:'expo.out'},.5)
+       .from('#hglow',{opacity:0,scaleX:.4,duration:1.8,ease:'power2.out'},.7)
+       .from('#dash',{y:160,opacity:0,rotateX:28,duration:1.6,ease:'expo.out'},.9)
+       .from('#bars div',{scaleY:0,stagger:.08,duration:.9,ease:'back.out(1.6)'},1.6)
+       .from('#dash .task',{x:20,opacity:0,stagger:.08,duration:.6},1.6)
+       .from('#quick',{y:40,opacity:0,scale:.94,duration:.9,ease:'back.out(1.4)',onComplete:play},2.1);
+  /* count up */
+  gsap.utils.toArray('.count').forEach(function(el){var o={v:0},to=+el.dataset.to,d=+el.dataset.dec||0;
+    intro.to(o,{v:to,duration:1.6,ease:'power2.out',onUpdate:function(){el.textContent=o.v.toFixed(d)}},1.4)});
+
+  /* scroll: the app tilts flat and the beam fades as the white panel slides over */
+  gsap.to('#dash',{scale:1.05,y:-30,ease:'none',scrollTrigger:{trigger:'.horizon-wrap',start:'top 70%',end:'bottom top',scrub:true}});
+  gsap.to('#horizon,#hglow',{y:-60,ease:'none',scrollTrigger:{trigger:'.horizon-wrap',start:'top 70%',end:'bottom top',scrub:true}});
+  gsap.to('#beam',{opacity:.25,yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('#quick',{y:-40,ease:'none',scrollTrigger:{trigger:'.horizon-wrap',start:'top bottom',end:'bottom top',scrub:true}});
+
+  /* section headings */
+  gsap.utils.toArray('.reveal').forEach(function(h){gsap.from(h,{y:40,opacity:0,filter:'blur(10px)',duration:1,ease:'power3.out',scrollTrigger:{trigger:h,start:'top 85%'}})});
+  gsap.utils.toArray('.chip').forEach(function(c){gsap.from(c,{y:16,opacity:0,duration:.7,scrollTrigger:{trigger:c,start:'top 90%'}})});
+
+  /* feature cards rise in a wave, then each demo plays */
+  gsap.from('.feat',{y:80,opacity:0,stagger:.12,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.feats',start:'top 80%'}});
+  gsap.to('#ring',{rotation:360,duration:24,repeat:-1,ease:'none'});
+  gsap.fromTo('#ring',{scale:.92},{scale:1.04,duration:2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+  gsap.timeline({repeat:-1,repeatDelay:1.2,scrollTrigger:{trigger:'.feats',start:'top 75%'}})
+    .fromTo('.req',{y:30,opacity:0},{y:0,opacity:1,duration:.6,ease:'power3.out'})
+    .to('.req .ok',{scale:.94,duration:.12,delay:.9}).to('.req .ok',{scale:1,duration:.2})
+    .to('#stamp',{y:'0%',duration:.35,ease:'power3.out'},'-=.1')
+    .to('.req',{y:-20,opacity:0,duration:.5,delay:1.6,ease:'power2.in'})
+    .set('#stamp',{y:'100%'});
+  gsap.timeline({repeat:-1,repeatDelay:1.4,scrollTrigger:{trigger:'.feats',start:'top 75%'}})
+    .fromTo('#toast',{y:70,opacity:0,scale:.9},{y:0,opacity:1,scale:1,duration:.7,ease:'back.out(1.6)'})
+    .to('#toast',{x:8,duration:.06,repeat:3,yoyo:true},'+=.2')
+    .to('#toast',{y:-30,opacity:0,duration:.5,delay:2.2,ease:'power2.in'});
+
+  /* install steps and shortcut keys */
+  gsap.from('.steps li',{y:40,opacity:0,stagger:.1,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.tabs',start:'top 85%'}});
+  gsap.from('.key',{y:60,opacity:0,stagger:.12,duration:.9,ease:'power3.out',scrollTrigger:{trigger:'.keys',start:'top 85%'}});
+  gsap.utils.toArray('.caps').forEach(function(c,n){
+    gsap.timeline({repeat:-1,repeatDelay:2.5,delay:n*.9,scrollTrigger:{trigger:'.keys',start:'top 80%'}})
+      .to(c.children,{y:4,boxShadow:'0 0 0 #0A0A0E,0 2px 6px rgba(0,0,0,.5)',borderColor:'rgba(164,147,255,.7)',stagger:.12,duration:.12})
+      .to(c.children,{y:0,boxShadow:'0 4px 0 #0A0A0E,0 6px 18px rgba(0,0,0,.5)',borderColor:'rgba(255,255,255,.14)',stagger:.06,duration:.25,delay:.25})});
 })();
 </script>
 </body></html>
